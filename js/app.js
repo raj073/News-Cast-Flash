@@ -63,22 +63,22 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
 
             <div class="col-lg-9 ps-2 pe-4 d-flex align-items-center mt-3 p-3">
                 <div>
-                    <h5>${news.title}</h5>
-                    <small>${news.details.slice(0, 200) + '...'}</small>
+                    <h5>${news.title ? news.title : 'No Title Found'}</h5>
+                    <small>${news.details ? news.details.slice(0, 300) + '...' : 'No Details Found'}</small>
                     <div class="d-flex flex-row justify-content-between align-items-center mt-3">
                         <!-- author part-->
                         <div class= "d-flex flex-row justify-content-between align-items-center">
                             <!-- image part-->
-                            <img style="width:40px; height:40px; border-radius:30px" src="${news.author.img}" class="me-1" alt="picture of the author">
+                            <img style="width:40px; height:40px; border-radius:30px" src="${news.author.img ? news.author.img : 'No Image'}" class="me-1" alt="picture of the author">
 
                             <div class="mt-3">
-                                <small class="ps-2 p-0 fs-6"> ${news.author.name} </small>
-                                <p><small class="ps-2 p-0 m-0 fs-6 text-muted">${news.author.published_date}</small></p>
+                                <small class="ps-2 p-0 fs-6"> ${news.author.name ? news.author.name : 'No Author Name Found'} </small>
+                                <p><small class="ps-2 p-0 m-0 fs-6 text-muted">${news.author.published_date ? news.author.published_date : 'No Date Found'}</small></p>
                             </div>
                         </div>
 
                         <div class="pe-3">
-                            <i class="fa-solid fa-eye"></i> <small class="ps-2">${news.total_view}</small>
+                            <i class="fa-solid fa-eye"></i> <small class="ps-2">${news.total_view ? news.total_view : 'No View'}</small>
                         </div>
 
                         <div class="me-5 text-primary fw-semibold">
