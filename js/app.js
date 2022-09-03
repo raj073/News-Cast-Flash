@@ -25,6 +25,7 @@ loadCategories();
 
 const singleCategoryDetails = (category_id, category_name) => {
 
+    toggleSpinner(true);
     let categoryIdString = category_id.toString();
     if (categoryIdString.length < 2) {
         categoryIdString = "0" + category_id_in_string;
@@ -33,6 +34,7 @@ const singleCategoryDetails = (category_id, category_name) => {
     fetch(`https://openapi.programming-hero.com/api/news/category/${categoryIdString}`)
         .then(response => response.json())
         .then(data => displaySingleCategoryItemCount(data.data, category_name))
+        .catch(error => console.log(error));
 }
 
 const displaySingleCategoryItemCount = (data, category_name) => {
@@ -42,6 +44,7 @@ const displaySingleCategoryItemCount = (data, category_name) => {
        <p class="p-3 text-black-75"> Total <span class="fw-semibold text-black"> ${data.length} </span> news found for category <span class="fw-semibold fst-italic text-black"> ${category_name}</span></p>
     `;
     displaySingleCategoryNewsDetails(data);
+    toggleSpinner(false);
 }
 
 const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
@@ -64,7 +67,7 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
             <div class="col-lg-9 ps-2 pe-4 d-flex align-items-center mt-3 p-3">
                 <div>
                     <h5>${news.title}</h5>
-                    <small>${news.details}</small>
+                    <small>${news.details.slice(0, 200) + '...'}</small>
                     <div class="d-flex flex-row justify-content-between align-items-center mt-3">
                         <!-- author part-->
                         <div class= "d-flex flex-row justify-content-between align-items-center">
@@ -91,7 +94,20 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
 
         `;
         categoryWiseNewsContainer.appendChild(div);
+
+        //Stop ToggleSpinner
+        toggleSpinner(false);
     });
+}
+
+const toggleSpinner = isLoading => {
+    const newsLoader = document.getElementById('newsLoader');
+    if (isLoading === true) {
+        newsLoader.classList.remove('d-none');
+    }
+    else {
+        newsLoader.classList.add('d-none');
+    }
 }
 
 const getTotalInfo = (value, valueTypeName) => value ? value : valueTypeName + ' Item not found';
