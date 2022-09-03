@@ -34,6 +34,9 @@ const singleCategoryDetails = (category_id, category_name) => {
     fetch(`https://openapi.programming-hero.com/api/news/category/${categoryIdString}`)
         .then(response => response.json())
         .then(data => displaySingleCategoryItemCount(data.data, category_name))
+
+    // const sortedResponse = news.total_view.sort(function (a, b) { return parseInt(a.news.total_view) - parseInt(b.news.total_view) });
+    // console.log(sortedResponse)
 }
 
 const displaySingleCategoryItemCount = (data, category_name) => {
@@ -52,6 +55,7 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
     categoryWiseNewsContainer.innerHTML = ``;
     categoryWiseNews.forEach(news => {
         console.log(news);
+
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
@@ -73,7 +77,7 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
 
                             <div class="mt-3">
                                 <small class="ps-2 p-0 fs-6"> ${news.author.name ? news.author.name : 'No Author Name Found'} </small>
-                                <p><small class="ps-2 p-0 m-0 fs-6 text-muted">${news.author.published_date ? news.author.published_date : 'No Date Found'}</small></p>
+                                <p><small class="ps-2 p-0 m-0 fs-6 text-muted">${news.author.published_date ? news.author.published_date.slice(0, 10) : 'No Date Found'}</small></p>
                             </div>
                         </div>
 
