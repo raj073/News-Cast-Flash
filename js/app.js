@@ -33,7 +33,6 @@ const singleCategoryDetails = (category_id, category_name) => {
     fetch(`https://openapi.programming-hero.com/api/news/category/${categoryIdString}`)
         .then(response => response.json())
         .then(data => displaySingleCategoryItemCount(data.data, category_name))
-
 }
 
 const displaySingleCategoryItemCount = (data, category_name) => {
@@ -95,4 +94,4 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
     });
 }
 
-const getTotalInfo = (value, valueTypeName) => value ? value : valueTypeName + ' not found';
+const getTotalInfo = (value, valueTypeName) => value ? value : valueTypeName + ' Item not found';
