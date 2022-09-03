@@ -11,3 +11,7 @@ body {
 .text-blue {
     color: #2937f0;
 }
+
+ul.no-bullets {
+    list-style-type: none;
+}
