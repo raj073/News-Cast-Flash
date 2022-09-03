@@ -34,7 +34,6 @@ const singleCategoryDetails = (category_id, category_name) => {
     fetch(`https://openapi.programming-hero.com/api/news/category/${categoryIdString}`)
         .then(response => response.json())
         .then(data => displaySingleCategoryItemCount(data.data, category_name))
-        .catch(error => console.log(error));
 }
 
 const displaySingleCategoryItemCount = (data, category_name) => {
@@ -55,8 +54,6 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
         console.log(news);
         const div = document.createElement('div');
         div.classList.add('col');
-        const date = news.author.published_date.split(" ")[0]
-        let dateFormat = new Date(date);
         div.innerHTML = `
         
           <div class="border rounded d-flex justify-content-between flex-column flex-lg-row bg-white shadow border-0">
@@ -75,17 +72,17 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
                             <img style="width:40px; height:40px; border-radius:30px" src="${news.author.img}" class="me-1" alt="picture of the author">
 
                             <div class="mt-3">
-                                <small class="ps-2 p-0 fs-6"> ${getTotalInfo(news.author.name, 'Author name')} </small>
-                                <p><small class="ps-2 p-0 m-0 fs-6 text-muted">${getTotalInfo(date, 'Date')}</small></p>
+                                <small class="ps-2 p-0 fs-6"> ${news.author.name} </small>
+                                <p><small class="ps-2 p-0 m-0 fs-6 text-muted">${news.author.published_date}</small></p>
                             </div>
                         </div>
 
                         <div class="pe-3">
-                            <i class="fa-solid fa-eye"></i> <small class="ps-2">${getTotalInfo(news.total_view, 'View info')}</small>
+                            <i class="fa-solid fa-eye"></i> <small class="ps-2">${news.total_view}</small>
                         </div>
 
                         <div class="me-5 text-primary fw-semibold">
-                            <button type="button" class="btn btn-primary">Show Details <i class="fa-solid fa-angles-right "></i></button>
+                            <button onclick="loadSingleNewsOpenModal('${news._id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target = "#singleNewsModal">Show Details <i class="fa-solid fa-angles-right"></i></button>
                         </div>
                     </div>
                 </div>
@@ -100,6 +97,7 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
     });
 }
 
+
 const toggleSpinner = isLoading => {
     const newsLoader = document.getElementById('newsLoader');
     if (isLoading === true) {
@@ -110,4 +108,25 @@ const toggleSpinner = isLoading => {
     }
 }
 
-const getTotalInfo = (value, valueTypeName) => value ? value : valueTypeName + ' Item not found';
+const loadSingleNewsOpenModal = (news_id) => {
+
+    fetch(`https://openapi.programming-hero.com/api/news/${news_id}`)
+        .then(response => response.json())
+        .then(data => displaySingleNewsOpenModal(data.data[0]))
+}
+
+displaySingleNewsOpenModal = (newsId) => {
+    console.log(newsId);
+    const newsDetails = document.getElementById('news-details');
+    newsDetails.innerHTML = `
+            <div class = "justify-content-center align-items-center">
+                <a href=""><img id="profile-picture" src="${newsId.thumbnail_url}" alt="profile-picture"></a>
+            </div>
+    <p>News Title: ${newsId.title ? newsId.title : 'No Title Found'}</p>
+    <p>Author Name: ${newsId.author.name ? newsId.author.name : 'No Author Name Found'}</p>
+    <p>Rating: ${newsId.rating.number ? newsId.rating.number : 'No Rating Found'}</p>
+    <p>Badge: ${newsId.rating.badge ? newsId.rating.badge : 'No Badge Found'}</p>
+    <p>Total View: ${newsId.total_view ? newsId.total_view : 'No Total View Found'}</p>
+    
+    `;
+}
