@@ -64,6 +64,12 @@ const displaySingleCategoryItemCount = (data, category_name) => {
 const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
 
     const categoryWiseNewsContainer = document.getElementById('categoryWiseNewsContainer');
+
+    // Sorting News order by View
+    categoryWiseNews.sort(function (a, b) {
+        return b.total_view - a.total_view;
+    });
+
     categoryWiseNewsContainer.innerHTML = ``;
     categoryWiseNews.forEach(news => {
         console.log(news);
@@ -137,6 +143,7 @@ const loadSingleNewsOpenModal = (news_id) => {
 displaySingleNewsOpenModal = (newsId) => {
     console.log(newsId);
     const newsDetails = document.getElementById('news-details');
+
     newsDetails.innerHTML = `
             <div class = "justify-content-center align-items-center">
                 <a href=""><img id="profile-picture" src="${newsId.thumbnail_url}" alt="profile-picture"></a>
