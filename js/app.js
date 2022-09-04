@@ -162,8 +162,8 @@ displaySingleNewsOpenModal = (newsId) => {
             </div>
     <p>News Title: ${newsId.title ? newsId.title : 'No Title Found'}</p>
     <p>Author Name: ${newsId.author.name ? newsId.author.name : 'No Author Name Found'}</p>
-    <p>Rating: ${newsId.rating.number ? newsId.rating.number : 'No Rating Found'}</p>
-    <p>Badge: ${newsId.rating.badge ? newsId.rating.badge : 'No Badge Found'}</p>
+    <p class="text-info">Rating: ${newsId.rating.number ? newsId.rating.number : 'No Rating Found'}</p>
+    <p class="text-info">Badge: ${newsId.rating.badge ? newsId.rating.badge : 'No Badge Found'}</p>
     <p>Total View: ${newsId.total_view ? newsId.total_view : 'No Total View Found'}</p>
     
     `;
