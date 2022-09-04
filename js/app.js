@@ -153,7 +153,7 @@ const loadSingleNewsOpenModal = (news_id) => {
 }
 
 displaySingleNewsOpenModal = (newsId) => {
-    console.log(newsId);
+    //console.log(newsId);
     const newsDetails = document.getElementById('news-details');
 
     newsDetails.innerHTML = `
