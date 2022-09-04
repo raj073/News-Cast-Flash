@@ -1,9 +1,19 @@
 const loadCategories = async () => {
+    document.getElementById('error-message-pgraph').style.display = 'none';
     const url = `https://openapi.programming-hero.com/api/news/categories`;
-    const response = await fetch(url);
-    const data = await response.json();
-    displayCategories(data.data.news_category);
+    fetch(url)
+        .then(response => response.json())
+        .then(data => displayCategories(data.data.news_category))
+        .catch(error => displayErrorMessage())
+    // const response = await fetch(url);
+    // const data = await response.json();
+    // displayCategories(data.data.news_category);
 
+}
+const displayErrorMessage = (error) => {
+    const errorMessagePgraph = document.getElementById('error-message-pgraph');
+    errorMessagePgraph.style.display = 'block';
+    alert(error);
 }
 
 
@@ -26,14 +36,16 @@ loadCategories();
 const singleCategoryDetails = (category_id, category_name) => {
 
     toggleSpinner(true);
+    document.getElementById('error-message-pgraph').style.display = 'none';
     let categoryIdString = category_id.toString();
-    if (categoryIdString.length < 2) {
+    if (categoryIdString.length < 1) {
         categoryIdString = "0" + category_id_in_string;
     }
 
     fetch(`https://openapi.programming-hero.com/api/news/category/${categoryIdString}`)
         .then(response => response.json())
         .then(data => displaySingleCategoryItemCount(data.data, category_name))
+        .catch(error => displayErrorMessage())
 
     // const sortedResponse = news.total_view.sort(function (a, b) { return parseInt(a.news.total_view) - parseInt(b.news.total_view) });
     // console.log(sortedResponse)
@@ -114,9 +126,12 @@ const toggleSpinner = isLoading => {
 
 const loadSingleNewsOpenModal = (news_id) => {
 
+    document.getElementById('error-message-pgraph').style.display = 'none';
+
     fetch(`https://openapi.programming-hero.com/api/news/${news_id}`)
         .then(response => response.json())
         .then(data => displaySingleNewsOpenModal(data.data[0]))
+        .catch(error => displayErrorMessage())
 }
 
 displaySingleNewsOpenModal = (newsId) => {
