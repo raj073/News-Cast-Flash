@@ -1,3 +1,4 @@
+// Load API
 const loadCategories = async () => {
     document.getElementById('error-message-pgraph').style.display = 'none';
     const url = `https://openapi.programming-hero.com/api/news/categories`;
@@ -10,13 +11,14 @@ const loadCategories = async () => {
     // displayCategories(data.data.news_category);
 
 }
+// Error Message Start
 const displayErrorMessage = (error) => {
     const errorMessagePgraph = document.getElementById('error-message-pgraph');
     errorMessagePgraph.style.display = 'block';
     alert(error);
 }
 
-
+// Category Wise Display
 const displayCategories = categories => {
 
     categories.forEach(category => {
@@ -46,9 +48,6 @@ const singleCategoryDetails = (category_id, category_name) => {
         .then(response => response.json())
         .then(data => displaySingleCategoryItemCount(data.data, category_name))
         .catch(error => displayErrorMessage())
-
-    // const sortedResponse = news.total_view.sort(function (a, b) { return parseInt(a.news.total_view) - parseInt(b.news.total_view) });
-    // console.log(sortedResponse)
 }
 
 const displaySingleCategoryItemCount = (data, category_name) => {
@@ -59,6 +58,7 @@ const displaySingleCategoryItemCount = (data, category_name) => {
 
 }
 
+// Show Result Count
 const showResultCount = (data, category_name) => {
     const singleCategoriesTotalItemCount = document.getElementById('singleCategoriesTotalItemCount');
     if (data.length < 1) {
@@ -84,7 +84,7 @@ const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
 
     categoryWiseNewsContainer.innerHTML = ``;
     categoryWiseNews.forEach(news => {
-        console.log(news);
+        //console.log(news);
 
         const div = document.createElement('div');
         div.classList.add('col');
