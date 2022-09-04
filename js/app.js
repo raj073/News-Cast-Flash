@@ -38,7 +38,7 @@ const singleCategoryDetails = (category_id, category_name) => {
     toggleSpinner(true);
     document.getElementById('error-message-pgraph').style.display = 'none';
     let categoryIdString = category_id.toString();
-    if (categoryIdString.length < 1) {
+    if (categoryIdString.length < 2) {
         categoryIdString = "0" + category_id_in_string;
     }
 
@@ -53,12 +53,24 @@ const singleCategoryDetails = (category_id, category_name) => {
 
 const displaySingleCategoryItemCount = (data, category_name) => {
     //console.log(data);
+    showResultCount(data, category_name);
+    toggleSpinner(false);
+    displaySingleCategoryNewsDetails(data);
+
+}
+
+const showResultCount = (data, category_name) => {
     const singleCategoriesTotalItemCount = document.getElementById('singleCategoriesTotalItemCount');
-    singleCategoriesTotalItemCount.innerHTML = `
+    if (data.length < 1) {
+        return singleCategoriesTotalItemCount.innerHTML = `
+        <p class="p-3 text-black-75"> No News Found for the Category of <span class="fw-semibold fst-italic text-black"> ${category_name}</span></p>
+        `;
+    }
+    else {
+        return singleCategoriesTotalItemCount.innerHTML = `
        <p class="p-3 text-black-75"> Total <span class="fw-semibold text-black"> ${data.length} </span> news found for category <span class="fw-semibold fst-italic text-black"> ${category_name}</span></p>
     `;
-    displaySingleCategoryNewsDetails(data);
-    toggleSpinner(false);
+    }
 }
 
 const displaySingleCategoryNewsDetails = (categoryWiseNews) => {
